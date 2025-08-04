@@ -1,245 +1,293 @@
+# Claude Code UI
+
 <div align="center">
   <img src="public/logo.svg" alt="Claude Code UI" width="64" height="64">
   <h1>Claude Code UI</h1>
+  <p>为 Claude Code CLI 提供现代化的 Web 界面</p>
 </div>
 
+## 项目概述
 
-A desktop and mobile UI for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), Anthropic's official CLI for AI-assisted coding. You can use it locally or remotely to view your active projects and sessions in claude code and make changes to them the same way you would do it in claude code CLI. This gives you a proper interface that works everywhere. 
+Claude Code UI 是一个基于 Web 的桌面和移动端界面，为 Anthropic 官方的 Claude Code CLI 提供图形化操作体验。它允许你通过浏览器本地或远程访问 Claude Code 项目，管理会话，编辑文件，并与 Claude AI 进行交互式对话。
 
-## Screenshots
+## 技术栈
 
-<div align="center">
-  
-<table>
-<tr>
-<td align="center">
-<h3>Desktop View</h3>
-<img src="public/screenshots/desktop-main.png" alt="Desktop Interface" width="400">
-<br>
-<em>Main interface showing project overview and chat</em>
-</td>
-<td align="center">
-<h3>Mobile Experience</h3>
-<img src="public/screenshots/mobile-chat.png" alt="Mobile Interface" width="250">
-<br>
-<em>Responsive mobile design with touch navigation</em>
-</td>
-</tr>
-</table>
+### 前端技术栈
+- **React 18** - 现代组件架构，使用 Hooks 和 Context API
+- **Vite** - 快速构建工具和开发服务器
+- **Tailwind CSS** - 实用优先的 CSS 框架，支持暗色模式
+- **CodeMirror** - 高级代码编辑器，支持多语言语法高亮
+- **React Router DOM** - 客户端路由管理
+- **WebSocket** - 实时双向通信
+- **React Markdown** - Markdown 内容渲染
+- **Lucide React** - 现代化图标库
+- **React Dropzone** - 文件拖拽上传
 
+### 后端技术栈
+- **Node.js** - JavaScript 运行时环境
+- **Express.js** - Web 应用框架，提供 RESTful API
+- **WebSocket (ws)** - 实时通信协议
+- **SQLite (better-sqlite3)** - 轻量级关系型数据库
+- **bcrypt** - 密码哈希加密
+- **JWT** - JSON Web Token 身份验证
+- **node-pty** - 伪终端支持，用于 Shell 集成
+- **chokidar** - 文件系统监听，实时项目更新
+- **multer** - 文件上传处理
 
+### 开发工具
+- **Concurrently** - 并行运行前后端服务
+- **PostCSS** - CSS 后处理器
+- **Autoprefixer** - CSS 浏览器前缀自动添加
 
-</div>
+## 业务逻辑
 
-## Features
+### 核心功能模块
 
-- **Responsive Design** - Works seamlessly across desktop, tablet, and mobile so you can also use Claude Code from mobile 
-- **Interactive Chat Interface** - Built-in chat interface for seamless communication with Claude Code
-- **Integrated Shell Terminal** - Direct access to Claude Code CLI through built-in shell functionality
-- **File Explorer** - Interactive file tree with syntax highlighting and live editing
-- **Git Explorer** - View, stage and commit your changes. You can also switch branches 
-- **Session Management** - Resume conversations, manage multiple sessions, and track history
+#### 1. 项目管理
+- **自动发现** - 从 `~/.claude/projects/` 自动扫描 Claude Code 项目
+- **项目浏览** - 可视化项目列表，显示元数据和会话数量
+- **项目操作** - 重命名、删除、手动添加项目
+- **智能导航** - 快速访问最近的项目和会话
 
+#### 2. 会话管理
+- **会话持久化** - 所有对话自动保存到本地存储
+- **会话组织** - 按项目和时间戳分组管理
+- **会话操作** - 重命名、删除、导出对话历史
+- **跨设备同步** - 从任何设备访问会话
 
-## Quick Start
+#### 3. 聊天界面
+- **实时通信** - 通过 WebSocket 与 Claude AI 实时对话
+- **消息历史** - 完整的对话历史记录，包含时间戳和元数据
+- **多格式支持** - 文本、代码块、文件引用
+- **会话保护** - 防止项目更新中断活跃对话
 
-### Prerequisites
+#### 4. 文件管理
+- **交互式文件树** - 可展开/折叠的项目结构导航
+- **实时文件编辑** - 直接在界面中读取、修改和保存文件
+- **语法高亮** - 支持多种编程语言
+- **文件操作** - 创建、重命名、删除文件和目录
 
-- [Node.js](https://nodejs.org/) v20 or higher
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and configured
+#### 5. 终端集成
+- **内置 Shell** - 直接访问 Claude Code CLI
+- **伪终端支持** - 完整的终端功能，包括命令历史
+- **实时输出** - 命令执行结果的实时显示
 
-### Installation
+#### 6. Git 集成
+- **版本控制** - 查看、暂存和提交更改
+- **分支管理** - 切换和管理 Git 分支
+- **状态显示** - 实时显示文件变更状态
 
-1. **Clone the repository:**
+### 安全机制
+
+#### 工具配置
+- **默认禁用** - 所有 Claude Code 工具默认禁用，防止潜在危险操作
+- **选择性启用** - 用户可手动启用需要的工具
+- **本地存储** - 工具偏好设置保存在本地
+
+#### 身份验证
+- **JWT 令牌** - 基于令牌的身份验证
+- **密码加密** - bcrypt 哈希密码存储
+- **会话管理** - 安全的用户会话处理
+
+## 快速开始
+
+### 环境要求
+
+- **Node.js** v20 或更高版本
+- **Claude Code CLI** 已安装并配置
+- **Git** (可选，用于版本控制)
+
+### 安装步骤
+
+1. **克隆仓库**
 ```bash
 git clone https://github.com/siteboon/claudecodeui.git
 cd claudecodeui
 ```
 
-2. **Install dependencies:**
+2. **安装依赖**
 ```bash
 npm install
 ```
 
-3. **Configure environment:**
+3. **配置环境变量**
 ```bash
 cp .env.example .env
-# Edit .env with your preferred settings
+# 编辑 .env 文件，设置端口和其他配置
 ```
 
-4. **Start the application:**
+4. **启动应用**
+
+开发模式（热重载）：
 ```bash
-# Development mode (with hot reload)
 npm run dev
-
 ```
-The application will start at the port you specified in your .env
 
-5. **Open your browser:**
-   - Development: `http://localhost:3001`
+生产模式：
+```bash
+npm run build
+npm start
+```
 
-## Security & Tools Configuration
+5. **访问应用**
+- 开发环境：`http://localhost:3001`
+- 生产环境：根据配置的端口访问
 
-**🔒 Important Notice**: All Claude Code tools are **disabled by default**. This prevents potentially harmful operations from running automatically.
+### 环境变量配置
 
-### Enabling Tools
+创建 `.env` 文件并配置以下变量：
 
-To use Claude Code's full functionality, you'll need to manually enable tools:
+```env
+# 服务器端口
+PORT=3002
 
-1. **Open Tools Settings** - Click the gear icon in the sidebar
-3. **Enable Selectively** - Turn on only the tools you need
-4. **Apply Settings** - Your preferences are saved locally
+# 前端开发服务器端口
+VITE_PORT=3001
 
-<div align="center">
+# 数据库路径（可选）
+DB_PATH=./server/database/auth.db
 
-![Tools Settings Modal](public/screenshots/tools-modal.png)
-*Tools Settings interface - enable only what you need*
+# JWT 密钥（生产环境必须设置）
+JWT_SECRET=your-secret-key
+```
 
-</div>
+## 使用指南
 
-**Recommended approach**: Start with basic tools enabled and add more as needed. You can always adjust these settings later.
+### 首次使用
 
-## Usage Guide
+1. **启动应用** - 运行 `npm run dev`
+2. **访问界面** - 打开浏览器访问 `http://localhost:3001`
+3. **配置工具** - 在侧边栏设置中启用需要的 Claude Code 工具
+4. **选择项目** - 从项目列表中选择要工作的项目
+5. **开始对话** - 使用聊天界面与 Claude AI 交互
 
-### Core Features
+### 核心操作
 
-#### Project Management
-The UI automatically discovers Claude Code projects from `~/.claude/projects/` and provides:
-- **Visual Project Browser** - All available projects with metadata and session counts
-- **Project Actions** - Rename, delete, and organize projects
-- **Smart Navigation** - Quick access to recent projects and sessions
+#### 项目管理
+- **查看项目** - 侧边栏显示所有可用项目
+- **创建会话** - 点击项目创建新的对话会话
+- **管理会话** - 重命名、删除或导出会话历史
 
-#### Chat Interface
-- **Use responsive chat or Claude Code CLI** - You can either use the adapted chat interface or use the shell button to connect to Claude Code CLI. 
-- **Real-time Communication** - Stream responses from Claude with WebSocket connection
-- **Session Management** - Resume previous conversations or start fresh sessions
-- **Message History** - Complete conversation history with timestamps and metadata
-- **Multi-format Support** - Text, code blocks, and file references
+#### 文件操作
+- **浏览文件** - 使用文件树导航项目结构
+- **编辑文件** - 点击文件在代码编辑器中打开
+- **保存更改** - 使用 Ctrl+S 或点击保存按钮
 
-#### File Explorer & Editor
-- **Interactive File Tree** - Browse project structure with expand/collapse navigation
-- **Live File Editing** - Read, modify, and save files directly in the interface
-- **Syntax Highlighting** - Support for multiple programming languages
-- **File Operations** - Create, rename, delete files and directories
+#### 终端使用
+- **打开终端** - 点击 Shell 按钮打开内置终端
+- **执行命令** - 直接运行 Claude Code CLI 命令
+- **查看输出** - 实时查看命令执行结果
 
-#### Git Explorer
+#### Git 操作
+- **查看状态** - 在 Git 面板查看文件变更
+- **暂存文件** - 选择要暂存的文件
+- **提交更改** - 添加提交信息并提交
 
+## 架构设计
 
-#### Session Management
-- **Session Persistence** - All conversations automatically saved
-- **Session Organization** - Group sessions by project and timestamp
-- **Session Actions** - Rename, delete, and export conversation history
-- **Cross-device Sync** - Access sessions from any device
-
-### Mobile App
-- **Responsive Design** - Optimized for all screen sizes
-- **Touch-friendly Interface** - Swipe gestures and touch navigation
-- **Mobile Navigation** - Bottom tab bar for easy thumb navigation
-- **Adaptive Layout** - Collapsible sidebar and smart content prioritization
-- **Add shortcut to Home Screen** - Add a shortcut to your home screen and the app will behave like a PWA
-
-## Architecture
-
-### System Overview
+### 系统架构
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend       │    │  Claude CLI     │
-│   (React/Vite)  │◄──►│ (Express/WS)    │◄──►│  Integration    │
+│   前端界面      │    │   后端服务      │    │  Claude CLI     │
+│   (React/Vite)  │◄──►│ (Express/WS)    │◄──►│   集成          │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Backend (Node.js + Express)
-- **Express Server** - RESTful API with static file serving
-- **WebSocket Server** - Communication for chats and project refresh
-- **Claude CLI Integration** - Process spawning and management
-- **Session Management** - JSONL parsing and conversation persistence
-- **File System API** - Exposing file browser for projects
+### 数据流
 
-### Frontend (React + Vite)
-- **React 18** - Modern component architecture with hooks
-- **CodeMirror** - Advanced code editor with syntax highlighting
+1. **项目发现** - 后端监听 `~/.claude/projects/` 目录变化
+2. **实时通信** - WebSocket 连接处理聊天和项目更新
+3. **文件操作** - RESTful API 处理文件读写操作
+4. **会话管理** - SQLite 数据库存储用户和会话信息
 
+### 安全设计
 
+- **工具隔离** - 默认禁用所有工具，用户选择性启用
+- **文件权限** - 限制文件操作范围，防止系统文件访问
+- **会话保护** - 防止项目更新中断活跃对话
+- **输入验证** - 所有用户输入进行验证和清理
 
+## 开发指南
 
+### 项目结构
 
-### Contributing
+```
+claudecodeui/
+├── src/                    # 前端源码
+│   ├── components/         # React 组件
+│   ├── contexts/          # React Context
+│   ├── hooks/             # 自定义 Hooks
+│   ├── utils/             # 工具函数
+│   └── lib/               # 第三方库配置
+├── server/                # 后端源码
+│   ├── routes/            # API 路由
+│   ├── middleware/        # 中间件
+│   ├── database/          # 数据库相关
+│   └── claude-cli.js     # Claude CLI 集成
+├── public/                # 静态资源
+└── dist/                  # 构建输出
+```
 
-We welcome contributions! Please follow these guidelines:
+### 开发命令
 
-#### Getting Started
-1. **Fork** the repository
-2. **Clone** your fork: `git clone <your-fork-url>`
-3. **Install** dependencies: `npm install`
-4. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+```bash
+# 开发模式（前后端并行）
+npm run dev
 
-#### Development Process
-1. **Make your changes** following the existing code style
-2. **Test thoroughly** - ensure all features work correctly
-3. **Run quality checks**: `npm run lint && npm run format`
-4. **Commit** with descriptive messages following [Conventional Commits](https://conventionalcommits.org/)
-5. **Push** to your branch: `git push origin feature/amazing-feature`
-6. **Submit** a Pull Request with:
-   - Clear description of changes
-   - Screenshots for UI changes
-   - Test results if applicable
+# 仅启动后端
+npm run server
 
-#### What to Contribute
-- **Bug fixes** - Help us improve stability
-- **New features** - Enhance functionality (discuss in issues first)
-- **Documentation** - Improve guides and API docs
-- **UI/UX improvements** - Better user experience
-- **Performance optimizations** - Make it faster
+# 仅启动前端
+npm run client
 
-## Troubleshooting
+# 构建生产版本
+npm run build
 
-### Common Issues & Solutions
+# 预览构建结果
+npm run preview
+```
 
-#### "No Claude projects found"
-**Problem**: The UI shows no projects or empty project list
-**Solutions**:
-- Ensure [Claude CLI](https://docs.anthropic.com/en/docs/claude-code) is properly installed
-- Run `claude` command in at least one project directory to initialize
-- Verify `~/.claude/projects/` directory exists and has proper permissions
-d
+## 故障排除
 
-#### File Explorer Issues
-**Problem**: Files not loading, permission errors, empty directories
-**Solutions**:
-- Check project directory permissions (`ls -la` in terminal)
-- Verify the project path exists and is accessible
-- Review server console logs for detailed error messages
-- Ensure you're not trying to access system directories outside project scope
+### 常见问题
 
+#### 1. 找不到 Claude 项目
+**问题**：界面显示没有项目或空的项目列表
+**解决方案**：
+- 确保 Claude CLI 已正确安装
+- 在至少一个项目目录中运行 `claude` 命令初始化
+- 验证 `~/.claude/projects/` 目录存在且有正确权限
 
-## License
+#### 2. 文件浏览器问题
+**问题**：文件无法加载、权限错误、空目录
+**解决方案**：
+- 检查项目目录权限
+- 验证项目路径存在且可访问
+- 查看服务器控制台日志获取详细错误信息
 
-GNU General Public License v3.0 - see [LICENSE](LICENSE) file for details.
+#### 3. WebSocket 连接失败
+**问题**：聊天功能无法正常工作
+**解决方案**：
+- 检查防火墙设置
+- 验证端口配置
+- 重启开发服务器
 
-This project is open source and free to use, modify, and distribute under the GPL v3 license.
+## 许可证
 
-## Acknowledgments
+GNU General Public License v3.0 - 详见 [LICENSE](LICENSE) 文件。
 
-### Built With
-- **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** - Anthropic's official CLI
-- **[React](https://react.dev/)** - User interface library
-- **[Vite](https://vitejs.dev/)** - Fast build tool and dev server
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
-- **[CodeMirror](https://codemirror.net/)** - Advanced code editor
+## 致谢
 
+### 构建技术
+- **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** - Anthropic 官方 CLI
+- **[React](https://react.dev/)** - 用户界面库
+- **[Vite](https://vitejs.dev/)** - 快速构建工具
+- **[Tailwind CSS](https://tailwindcss.com/)** - 实用优先的 CSS 框架
+- **[CodeMirror](https://codemirror.net/)** - 高级代码编辑器
 
-## Support & Community
-
-### Stay Updated
-- **Star** this repository to show support
-- **Watch** for updates and new releases
-- **Follow** the project for announcements
-
-### Sponsors
-- [Siteboon - AI powered website builder](https://siteboon.ai)
 ---
 
 <div align="center">
-  <strong>Made with care for the Claude Code community.</strong>
+  <strong>为 Claude Code 社区精心打造</strong>
 </div>
